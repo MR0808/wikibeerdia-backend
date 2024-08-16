@@ -1,0 +1,67 @@
+scalar Date
+
+type User {
+    _id: ID!
+    username: String!
+    email: String!
+    firstName: String
+    lastName: String
+    passwordLastUpdated: Date
+    dateOfBirth: Date
+    access: String
+    gender: Gender
+    state: String
+    country: String
+    profilePicture: String
+    isVerified: Boolean
+    emailOld: String
+    passwordResetToken: String
+    passwordResetExpires: String
+    otp_enabled: Boolean
+    otp_verified: Boolean
+    otp_ascii: String
+    otp_hex: String
+    otp_base32: String
+    otp_auth_url: String
+    otp_backups: [String]
+}
+
+type ReturnData {
+    result: Boolean!
+    message: String!
+    data: String!
+}
+
+type AuthData {
+    token: String
+    userId: String
+    otp_enabled: Boolean
+}
+
+enum Gender {
+    MALE
+    FEMALE
+    OTHER
+    NOTSAY
+}
+
+input UserCreateData {
+    email: String!
+    username: String!
+    password: String!
+}
+
+input UserLoginData {
+    identifier: String!
+    password: String!
+    rememberMe: Boolean!
+}
+
+type Query {
+    login(userInput: UserLoginData): AuthData!
+}
+
+type Mutation {
+    createUser(userInput: UserCreateData): User!
+    verifyEmail(token: String): ReturnData!
+}
